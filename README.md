@@ -13,8 +13,8 @@
 | :---: | :--- | :--- |  
 | 1 | actorPlus | 隐藏没有头像的演员和制作人员 |  
 | 2 | emby-swiper | 主页轮播图 |  
-| 3 | ~~emby-tab~~ | ~~自定义隐藏emby页面顶部中间导航栏按钮~~ |
+| 3 | emby-tab | 自定义隐藏emby页面顶部中间导航栏按钮 |
 | 4 | fanart_show | 显示同人图（fanart图） |
 | 5 | itemSortForNewDevice | 修改新设备媒体库各标签默认排序 |  
 | 6 | playbackRate | 小秘同款播放页手势及按键交互体验 |
-| 7 | ~~trailer~~ | ~~Emby影视卡片鼠标悬停播放（预告）~~ |
+| 7 | ~~trailer~~ | ~~Emby影视卡片鼠标悬停播放（预告）~~（XingyiHua2024大手子已做得很不错：https://github.com/XingyiHua2024/Emby-Javascript-Details） |
