@@ -268,6 +268,9 @@ class Stagephoto {
 		var html = "";
 		if (!this.extraFlag) {
 			for (let index = 0; index < this.item.BackdropImageTags.length; ++index) {
+				if (index > 0 && this.item.BackdropImageTags[index] === this.item.BackdropImageTags[index - 1]) {
+					continue;
+				}
 				const stagephotoHtml = `
 			<div class="swiper-slide virtualScrollItem card backdropCard card-horiz backdropCard-horiz card-hoverable focusable"
 				tabindex="0" style="translate: 0px;">
