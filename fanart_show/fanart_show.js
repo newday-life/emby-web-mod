@@ -11,7 +11,7 @@ class CommonUtilsStage {
         style.type = "text/css";
         style.id = id;
         style.innerHTML = content;
-        document.head.appendChild(style);
+        document.body.appendChild(style);
     }
 }
 class Stagephoto {
