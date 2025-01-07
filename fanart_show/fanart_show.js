@@ -295,6 +295,17 @@ class Stagephoto {
 			this.Backdrop = this.Backdrop.filter((item, index) => {
 				return item.ImageType === "Backdrop" && item.Path.includes("extrafanart") && item.Filename !== this.Backdrop[index - 1]?.Filename;
 			});
+			this.Backdrop.sort(function (a, b) {
+				try {
+					const re = /\d+/, aa = a.Filename.substr(a.Filename.lastIndexOf(".") - 3, 3).match(re), bb = b.Filename.substr(b.Filename.lastIndexOf(".") - 3, 3).match(re);
+					let aaa = 0, bbb = 0;
+					aa && (aaa = parseInt(aa[0]));
+					bb && (bbb = parseInt(bb[0]));
+					return aaa - bbb
+				} catch (err) {
+					return 0
+				}
+			});
 			if (this.Backdrop.length == 0) {
 				document.getElementById("stagephotoCss").remove();
 				document.querySelector(".itemView:not(.hide) .stagephotoSection").remove();
