@@ -17,4 +17,4 @@
 | 4 | fanart_show | 显示同人图（fanart图） |
 | 5 | itemSortForNewDevice | 修改新设备媒体库各标签默认排序 |  
 | 6 | playbackRate | 小秘同款播放页手势及按键交互体验 |
-| 7 | ~~trailer~~ | ~~Emby影视卡片鼠标悬停播放（预告）~~（XingyiHua2024大手子已做得很不错：[https://github.com/XingyiHua2024/Emby-Javascript-Details](https://github.com/XingyiHua2024/Emby-Javascript-Details) ） |
+| 7 | trailer | Emby影视卡片鼠标悬停播放（预告）（另 XingyiHua2024大手子做得很不错：[https://github.com/XingyiHua2024/Emby-Javascript-Details](https://github.com/XingyiHua2024/Emby-Javascript-Details) ） |
