@@ -84,7 +84,6 @@ class HomeSwiper {
 		document.addEventListener("viewbeforeshow", async function (e) {
 			this.flag_cssjs = false;
 			if (e.detail.type === "home") {
-
 				if (!e.detail.isRestored) {
 					!document.getElementById("SwiperCss") && CommonUtils.loadExtastyle(this.SwiperCss, 'SwiperCss');
 					!document.getElementById("customCss") && CommonUtils.loadExtastyle(this.customCss, 'customCss');
@@ -92,17 +91,36 @@ class HomeSwiper {
 					this.user = swiperLibraryAccess ? JSON.parse(swiperLibraryAccess) : { Policy: { EnableAllFolders: true, EnabledFolders: [] } };
 					!localStorage.getItem('CACHE|Movies-Date') && !this.loadFlag && e.detail.contextPath.endsWith("home") && this.initLoading();
 					e.target.setAttribute("data-type", "home");
-					let sections = e.target.querySelector(".sections"),
-						elem = await this.initBanner();
-					if (elem) {
-						sections.parentNode.insertBefore(elem, sections);
-						this.loadFlag && this.fadeOut(document.querySelector(".misty-loading"), 500, () => document.querySelector(".misty-loading").remove());
-						this.initSwiper(e.target);
-					} else {
-						this.loadFlag && this.fadeOut(document.querySelector(".misty-loading"), 500, () => document.querySelector(".misty-loading").remove());
-						document.getElementById("customCss").remove();
-						document.getElementById("SwiperCss").remove();
-					}
+					this.mutation = new MutationObserver(async function (mutationRecoards) {
+						for (let mutationRecoard of mutationRecoards) {
+                                if (mutationRecoard.target.classList.contains("homeSectionsContainer")) {
+                                    this.mutation.disconnect();
+									!document.getElementById("SwiperCss") && CommonUtils.loadExtastyle(this.SwiperCss, 'SwiperCss');
+									!document.getElementById("customCss") && CommonUtils.loadExtastyle(this.customCss, 'customCss');
+									let sections = e.target.querySelector(".sections"),
+										elem = await this.initBanner();
+									if (elem) {
+										sections.parentNode.insertBefore(elem, sections);
+										this.loadFlag && this.fadeOut(document.querySelector(".misty-loading"), 500, () => document.querySelector(".misty-loading").remove());
+										this.initSwiper(e.target);
+									} else {
+										this.loadFlag && this.fadeOut(document.querySelector(".misty-loading"), 500, () => document.querySelector(".misty-loading").remove());
+										document.getElementById("customCss").remove();
+										document.getElementById("SwiperCss").remove();
+									}
+                                    break;
+                                }
+                        }
+
+					}.bind(this));
+
+					this.mutation.observe(e.target, {
+						attributes:true,
+						childList: true,
+						characterData: true,
+						subtree: true,
+					});
+					
 				} else {
 					this.swiper = e.target.querySelector('.mySwiper').swiper;
 					this.swiper2 = e.target.querySelector('.mySwiper-main').swiper;
@@ -198,19 +216,33 @@ class HomeSwiper {
 			}
 			let view = document.querySelector(".view:not(.hide)");
 			if (view?.controller?.constructor.name === "HomeView") {
-				this.mutation_cssjs.disconnect();
-				this.flag_cssjs = false;
-				!document.getElementById("SwiperCss") && CommonUtils.loadExtastyle(this.SwiperCss, 'SwiperCss');
-				!document.getElementById("customCss") && CommonUtils.loadExtastyle(this.customCss, 'customCss');
-				let elem = await this.initBanner();
-				let sections = view.querySelector(".sections");
-				elem && sections.parentNode.insertBefore(elem, sections);
-				this.initSwiper(view);
+				for (let mutationRecoard of mutationRecoards) {
+				if (mutationRecoard.target.classList.contains("homeSectionsContainer")) {
+					this.mutation_cssjs.disconnect();
+					this.flag_cssjs = false;
+					!document.getElementById("SwiperCss") && CommonUtils.loadExtastyle(this.SwiperCss, 'SwiperCss');
+					!document.getElementById("customCss") && CommonUtils.loadExtastyle(this.customCss, 'customCss');
+					!localStorage.getItem('CACHE|Movies-Date') && !this.loadFlag && e.detail.contextPath.endsWith("home") && this.initLoading();
+					let sections = mutationRecoard.target.querySelector(".sections"),
+						elem = await this.initBanner();
+					if (elem) {
+						sections.parentNode.insertBefore(elem, sections);
+						this.loadFlag && this.fadeOut(document.querySelector(".misty-loading"), 500, () => document.querySelector(".misty-loading").remove());
+						this.initSwiper(view);
+					} else {
+						this.loadFlag && this.fadeOut(document.querySelector(".misty-loading"), 500, () => document.querySelector(".misty-loading").remove());
+						document.getElementById("customCss").remove();
+						document.getElementById("SwiperCss").remove();
+					}
+					break;
+				}
 			}
-
+			}
+			
 		}.bind(this));
 
 		this.mutation_cssjs.observe(document.body, {
+			attributes: true,
 			childList: true,
 			characterData: true,
 			subtree: true,
